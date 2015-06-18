@@ -13,7 +13,6 @@
 	var compsci = ["Apps", "Computer", "Gaming", "Hacking", "Internet", "Programming", "Software", "Technology"];
 	var bio = ["Nature", "Life", "Cell", "Habitat", "Organs", "Microscope", "Species", "Protein"];
 	
-	
 	$(document).ready(function(){
 		matrix = iat("Computer Science", "Biology", "Female", "Male", compsci, bio, female, male);
 	});	
@@ -22,17 +21,12 @@
 <body>
 	<p id="directions"></p>
 	
-	<table id="associate">
-	<tr>
-		<td id="left"></td>
-		<td id="right"></td>
-	</tr>
-	</table>
-	
+	<div id="associate">
+		<div id="left"></div>
+		<div id="right"></div>
+	</div>
+	<div style="clear:both"></div>
 	<p id="console"></p>
-	<p id="timer"></p>
-	<p id="trial"></p>
-	<p id="block"></p>
 	<p id="error"><img src="images/error.png" width="200" height="200" alt="Error"></p>
 	<div id="return"></div>
 

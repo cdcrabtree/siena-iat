@@ -43,7 +43,7 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 			break;
 	}
 
-	matrixReturn = [[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]],[[],[],[]]];
+	matrixReturn = [[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]]];
 	i = 0;
 	numTrials = 20; 																		//Current/starting trials
 	curBlock = 1; 																		//Current block on; always start with 1
@@ -65,6 +65,13 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 				arrRight = arr4;					 
 				break;
 			case 3:
+				/*arrLeftAux1 = arr1;
+				arrLeftAux2 = arr3;
+				if (curTrial%2 == 0) {
+					arrLeft = arr1;
+				} else {
+					arrLeft = arr3;
+				}*/
 				arrLeft = arr1.concat(arr3);
 				arrRight = arr2.concat(arr4);
 				break;
@@ -88,26 +95,59 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 				c = "DONE";
 				break;				
 		}
+
+		/*if (arrLeftStack.length == 0) {
+			arrLeftStack = arrLeft.slice();
+		}
+		arrLeftStack.sort();
+
+		if (arrRightStack.length == 0) {
+			arrRightStack = arrRight.slice();
+		}
+		arrRightStack.sort();*/
+
 		if (e.which == 32 && c == "?") {
 			date = new Date();
 			seconds = date.getTime()/1000;
 			start = seconds;
 			
 			c = Math.floor(Math.random() *10);
+			arrLeftStack = arrLeft.slice();
+			arrRightStack = arrRight.slice();
 			if(c < 5){ 															//If random number < 5, pick from left array
-				randNeg = Math.floor(Math.random() * arrLeft.length);								//Choose random number from 0 to left array length
-				item = arrLeft[randNeg];
+				arrLeftStack.sort();
+				item = arrLeftStack.pop();
 			} 																			//Ends if statement to check if random number < 5
 			else { 														//If random number >= 5, pick from right array
-				randPos = Math.floor(Math.random() * arrRight.length);							//Choose random number from 0 to right array length
-				item = arrRight[randPos];
-				
+				arrRightStack.sort();
+				item = arrRightStack.pop();
 			}																			//Ends else if to choose positive word
-			if (item.indexOf(".") < 0) {
+			/*if (item.indexOf(".") < 0) {
 				$("#console").html(item);									//Show word at that index	
 			} else {
 				$("#console").html("<img src=\"images/"+item+"\">");									//Show word at that index
+			}*/
+			
+			if (arr1.indexOf(item) >= 0) {
+				$("#console").removeClass();
+				$("#console").addClass("color1");
+				matrixReturn[curBlock-1][3][i] = name1;
+			} else if(arr2.indexOf(item) >= 0) {
+				$("#console").removeClass();
+				$("#console").addClass("color1");
+				matrixReturn[curBlock-1][3][i] = name2;
+			} else if(arr3.indexOf(item) >= 0) {
+				$("#console").removeClass();
+				$("#console").addClass("color2");
+				matrixReturn[curBlock-1][3][i] = name3;
+			} else if(arr4.indexOf(item) >= 0) {
+				$("#console").removeClass();
+				$("#console").addClass("color2");
+				matrixReturn[curBlock-1][3][i] = name4;
 			}
+
+			$("#console").html(item);
+
 			matrixReturn[curBlock-1][0][i] = item;
 		} else if ((e.which == 69 || e.which == 73) && c != "?") {
 			date = new Date();
@@ -132,20 +172,47 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 					i = 0;
 				} else {
 					c = Math.floor(Math.random() *10);
-					if(c < 5){ 															//If random number < 5, pick from left array
-						randNeg = Math.floor(Math.random() * arrLeft.length);								//Choose random number from 0 to left array length
-						item = arrLeft[randNeg];
+					if(c < 5){ 													//If random number < 5, pick from left array
+						if (arrLeftStack.length == 0) {
+							arrLeftStack = arrLeft.slice();
+						}
+						arrLeftStack.sort();
+						item = arrLeftStack.pop();
 					} 																			//Ends if statement to check if random number < 5
 					else { 														//If random number >= 5, pick from right array
-						randPos = Math.floor(Math.random() * arrRight.length);							//Choose random number from 0 to right array length
-						item = arrRight[randPos];
+						if (arrRightStack.length == 0) {
+							arrRightStack = arrRight.slice();
+						}
+						arrRightStack.sort();
+						item = arrRightStack.pop();
 						
 					}																			//Ends else if to choose positive word
-					if (item.indexOf(".") < 0) {
+					/*if (item.indexOf(".") < 0) {
 						$("#console").html(item);									//Show word at that index	
 					} else {
 						$("#console").html("<img src=\"images/"+item+"\">");									//Show word at that index
+					}*/
+					
+					if (arr1.indexOf(item) >= 0) {
+						$("#console").removeClass();
+						$("#console").addClass("color1");
+						matrixReturn[curBlock-1][3][i+1] = name1;
+					} else if(arr2.indexOf(item) >= 0) {
+						$("#console").removeClass();
+						$("#console").addClass("color1");
+						matrixReturn[curBlock-1][3][i+1] = name2;
+					} else if(arr3.indexOf(item) >= 0) {
+						$("#console").removeClass();
+						$("#console").addClass("color2");
+						matrixReturn[curBlock-1][3][i+1] = name3;
+					} else if(arr4.indexOf(item) >= 0) {
+						$("#console").removeClass();
+						$("#console").addClass("color2");
+						matrixReturn[curBlock-1][3][i+1] = name4;
 					}
+
+					$("#console").html(item);
+
 					matrixReturn[curBlock-1][0][i+1] = item;
 					i++;
 				}
@@ -153,38 +220,39 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 				$("#error").show();
 				matrixReturn[curBlock-1][2][i] = 1;
 				matrixReturn[curBlock-1][0][i+1] = item;
+				matrixReturn[curBlock-1][3][i+1] = matrixReturn[curBlock-1][3][i];
 				i++;
 			}
 		}			
 			
 		switch (curBlock) {
 			case 1:
-				nameLeft = name1;
-				nameRight = name2;
+				nameLeft = "<span class='color1'>" + name1 + "</span>";
+				nameRight = "<span class='color1'>" + name2 + "</span>";
 				break;
 			case 2:
-				nameLeft = name3;
-				nameRight = name4;				 
+				nameLeft = "<span class='color2'>" + name3 + "</span>";
+				nameRight = "<span class='color2'>" + name4 + "</span>";				 
 				break;
 			case 3:
-				nameLeft = name1 + " or " + name3;
-				nameRight = name2 + " or " + name4;
+				nameLeft = "<span class='color1'>" + name1 + "</span>" + " or <span class='color2'>" + name3 + "</span>";
+				nameRight = "<span class='color1'>" + name2 + "</span>" + " or <span class='color2'>" + name4 + "</span>";
 				break;
 			case 4:
-				nameLeft = name1 + " or " + name3;
-				nameRight = name2 + " or " + name4;
+				nameLeft = "<span class='color1'>" + name1 + "</span>" + " or <span class='color2'>" + name3 + "</span>";
+				nameRight = "<span class='color1'>" + name2 + "</span>" + " or <span class='color2'>" + name4 + "</span>";
 				break;
 			case 5:
-				nameLeft = name2;
-				nameRight = name1;
+				nameLeft = "<span class='color1'>" + name2 + "</span>";
+				nameRight = "<span class='color1'>" + name1 + "</span>";
 				break;
 			case 6:
-				nameLeft = name2 + " or " + name3;
-				nameRight = name1 + " or " + name4;
+				nameLeft = "<span class='color1'>" + name2 + "</span>" + " or <span class='color2'>" + name3 + "</span>";
+				nameRight = "<span class='color1'>" + name1 + "</span>" + " or <span class='color2'>" + name4 + "</span>";
 				break;
 			case 7:
-				nameLeft = name2 + " or " + name3;
-				nameRight = name1 + " or " + name4;
+				nameLeft = "<span class='color1'>" + name2 + "</span>" + " or <span class='color2'>" + name3 + "</span>";
+				nameRight = "<span class='color1'>" + name1 + "</span>" + " or <span class='color2'>" + name4 + "</span>";
 				break;
 			default:
 				c = "DONE";
