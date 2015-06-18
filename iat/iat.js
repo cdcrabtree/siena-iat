@@ -1,3 +1,22 @@
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex ;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
 function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 	randomizing = Math.floor(Math.random() * 4);
 	switch (randomizing) {
@@ -115,11 +134,11 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 			arrLeftStack = arrLeft.slice();
 			arrRightStack = arrRight.slice();
 			if(c < 5){ 															//If random number < 5, pick from left array
-				arrLeftStack.sort();
+				shuffle(arrLeftStack);
 				item = arrLeftStack.pop();
 			} 																			//Ends if statement to check if random number < 5
 			else { 														//If random number >= 5, pick from right array
-				arrRightStack.sort();
+				shuffle(arrRightStack);
 				item = arrRightStack.pop();
 			}																			//Ends else if to choose positive word
 			/*if (item.indexOf(".") < 0) {
@@ -176,14 +195,14 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 						if (arrLeftStack.length == 0) {
 							arrLeftStack = arrLeft.slice();
 						}
-						arrLeftStack.sort();
+						shuffle(arrLeftStack);
 						item = arrLeftStack.pop();
 					} 																			//Ends if statement to check if random number < 5
 					else { 														//If random number >= 5, pick from right array
 						if (arrRightStack.length == 0) {
 							arrRightStack = arrRight.slice();
 						}
-						arrRightStack.sort();
+						shuffle(arrRightStack);
 						item = arrRightStack.pop();
 						
 					}																			//Ends else if to choose positive word
