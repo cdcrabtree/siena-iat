@@ -15,6 +15,12 @@
 	
 	$(document).ready(function(){
 		matrix = iat("Computer Science", "Biology", "Female", "Male", compsci, bio, female, male);
+		$("#getdata").click(function(){
+    			$.ajax({url: "process.php", success: function(result){
+        	$("#results").html(result);
+    }});
+});
+		
 	});	
 	</script>
 </head>
@@ -25,6 +31,8 @@
 		<div id="left"></div>
 		<div id="right"></div>
 	</div>
+	<button id="getdata">Get Button</button>
+	<div id="results"></div>
 	<div style="clear:both"></div>
 	<p id="console"></p>
 	<p id="error"><img src="images/error.png" width="200" height="200" alt="Error"></p>
