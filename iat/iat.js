@@ -134,11 +134,11 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 			arrLeftStack = arrLeft.slice();
 			arrRightStack = arrRight.slice();
 			if(c < 5){ 															//If random number < 5, pick from left array
-				shuffle(arrLeftStack);
+				arrLeftStack = shuffle(arrLeftStack);
 				item = arrLeftStack.pop();
 			} 																			//Ends if statement to check if random number < 5
 			else { 														//If random number >= 5, pick from right array
-				shuffle(arrRightStack);
+				arrRightStack = shuffle(arrRightStack);
 				item = arrRightStack.pop();
 			}																			//Ends else if to choose positive word
 			/*if (item.indexOf(".") < 0) {
@@ -195,14 +195,14 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 						if (arrLeftStack.length == 0) {
 							arrLeftStack = arrLeft.slice();
 						}
-						shuffle(arrLeftStack);
+						arrLeftStack = shuffle(arrLeftStack);
 						item = arrLeftStack.pop();
 					} 																			//Ends if statement to check if random number < 5
 					else { 														//If random number >= 5, pick from right array
 						if (arrRightStack.length == 0) {
 							arrRightStack = arrRight.slice();
 						}
-						shuffle(arrRightStack);
+						arrRightStack = shuffle(arrRightStack);
 						item = arrRightStack.pop();
 						
 					}																			//Ends else if to choose positive word
