@@ -64,7 +64,7 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 
 	matrixReturn = [[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]]];
 	i = 0;
-	numTrials = 20; 																		//Current/starting trials
+	numTrials = 5; 																		//Current/starting trials
 	curBlock = 1; 																		//Current block on; always start with 1
 	curTrial = 1; 																		//Current trial on; always start with 1
 	c = "?"
@@ -181,11 +181,12 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 					$("#error").hide();																		
 					curTrial = 1;
 					curBlock++;
-					if (curBlock == 1 || curBlock == 2 || curBlock == 3 || curBlock == 6) {
-						numTrials = 20;
-					} else if (curBlock == 4 || curBlock == 5 || curBlock == 7) {
-						numTrials = 40;
-					}
+					
+					//if (curBlock == 1 || curBlock == 2 || curBlock == 3 || curBlock == 6) {
+					//	numTrials = 20;
+					//} else if (curBlock == 4 || curBlock == 5 || curBlock == 7) {
+					//	numTrials = 40;
+					//}
 					c = "?";
 					$("#console").html("");
 					i = 0;
@@ -286,8 +287,21 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 			$("#directions").html("");
 			$("#left").html("");
 			$("#right").html("");
-			alert(JSON.stringify(matrixReturn, null, 4));
-			// /return matrixReturn;
+			var jsonMatrix = JSON.stringify(matrixReturn);
+			alert(jsonMatrix);
+			//return JSON.stringify(matrixReturn, null, 4);
+			
+			var x = "hello"
+			//return x;
+			
+			$.ajax({type: "POST", url: "process.php",  data: {"matrix" : jsonMatrix}, dataType: 'json', success: function(result){
+    				alert("call back entered");
+						$("#results").html(result);
+        	
+        	//
+    }});
+			
+			
 		}
 	});
 	

@@ -14,10 +14,14 @@
 	var bio = ["Nature", "Life", "Cell", "Habitat", "Organs", "Microscope", "Species", "Protein"];
 	
 	$(document).ready(function(){
-		matrix = iat("Computer Science", "Biology", "Female", "Male", compsci, bio, female, male);
+		var matrix = iat("Computer Science", "Biology", "Female", "Male", compsci, bio, female, male);
 		$("#getdata").click(function(){
-    			$.ajax({url: "process.php", success: function(result){
-        	$("#results").html(result);
+				  alert(matrix);
+    			$.ajax({type: "POST", url: "process.php",  data: {"matrix" : matrix}, dataType: 'json', success: function(result){
+    				alert("call back entered");
+						$("#results").html(result);
+        	
+        	//
     }});
 });
 		
@@ -31,7 +35,7 @@
 		<div id="left"></div>
 		<div id="right"></div>
 	</div>
-	<button id="getdata">Get Button</button>
+	<button id="getdata">Get Data</button>
 	<div id="results"></div>
 	<div style="clear:both"></div>
 	<p id="console"></p>
