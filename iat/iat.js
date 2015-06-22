@@ -62,7 +62,10 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 			break;
 	}
 
+	
+
 	matrixReturn = [[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]]];
+
 	i = 0;
 	numTrials = 5; 																		//Current/starting trials
 	curBlock = 1; 																		//Current block on; always start with 1
@@ -70,6 +73,12 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 	c = "?"
 	start = 0;
 	diff = 0;
+
+	nameLeft = "<span class='color1'>" + name1 + "</span>";
+	nameRight = "<span class='color1'>" + name2 + "</span>";
+	$("#directions").html(numTrials + " words will be shown. Press 'e' if the word is " + nameLeft.toLowerCase()  + ", 'i' if the word is " + nameRight.toLowerCase() + ". Press 'spacebar' to begin.");
+	$("#left").html(nameLeft);
+	$("#right").html(nameRight);
 
 	$("#error").hide();
 	$(document).keyup(function(e) {
@@ -84,69 +93,73 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 				arrRight = arr4;					 
 				break;
 			case 3:
-				/*arrLeftAux1 = arr1;
-				arrLeftAux2 = arr3;
-				if (curTrial%2 == 0) {
-					arrLeft = arr1;
-				} else {
-					arrLeft = arr3;
-				}*/
-				arrLeft = arr1.concat(arr3);
-				arrRight = arr2.concat(arr4);
+				arrLeft1 = arr1;
+				arrLeft2 = arr3;
+				arrRight1 = arr2;
+				arrRight2 = arr4;
 				break;
 			case 4:
-				arrLeft = arr1.concat(arr3);
-				arrRight = arr2.concat(arr4);
+				arrLeft1 = arr1;
+				arrLeft2 = arr3;
+				arrRight1 = arr2;
+				arrRight2 = arr4;
 				break;
 			case 5:
 				arrLeft = arr2;
 				arrRight = arr1;
 				break;
 			case 6:
-				arrLeft = arr2.concat(arr3);
-				arrRight = arr1.concat(arr4);
+				arrLeft1 = arr2;
+				arrLeft2 = arr3;
+				arrRight1 = arr1;
+				arrRight2 = arr4;
 				break;
 			case 7:
-				arrLeft = arr2.concat(arr3);
-				arrRight = arr1.concat(arr4);
+				arrLeft1 = arr2;
+				arrLeft2 = arr3;
+				arrRight1 = arr1;
+				arrRight2 = arr4;
 				break;
 			default:
 				c = "DONE";
 				break;				
 		}
-
-		/*if (arrLeftStack.length == 0) {
-			arrLeftStack = arrLeft.slice();
-		}
-		arrLeftStack.sort();
-
-		if (arrRightStack.length == 0) {
-			arrRightStack = arrRight.slice();
-		}
-		arrRightStack.sort();*/
+				
 
 		if (e.which == 32 && c == "?") {
 			date = new Date();
 			seconds = date.getTime()/1000;
 			start = seconds;
 			
+			if (curBlock == 1 || curBlock == 2 || curBlock == 5) {
+				arrLeftStack =  shuffle(arrLeft.slice());
+				arrRightStack = shuffle(arrRight.slice());
+			} else {
+				arrLeftStackAux1 = shuffle(arrLeft1.slice());
+				arrLeftStackAux2 = shuffle(arrLeft2.slice());
+
+				arrRightStackAux1 = shuffle(arrRight1.slice());
+				arrRightStackAux2 = shuffle(arrRight2.slice());
+
+				if (curTrial%2 == 0) {
+					arrRightStack = arrRightStackAux1;
+					arrLeftStack = arrLeftStackAux1;
+				} else {
+					arrLeftStack = arrLeftStackAux2;
+					arrRightStack = arrRightStackAux2;
+				}
+
+			}
+
 			c = Math.floor(Math.random() *10);
-			arrLeftStack = arrLeft.slice();
-			arrRightStack = arrRight.slice();
-			if(c < 5){ 															//If random number < 5, pick from left array
-				arrLeftStack = shuffle(arrLeftStack);
+			if(c < 5){ 															//If random number < 5, pick from left array	
 				item = arrLeftStack.pop();
 			} 																			//Ends if statement to check if random number < 5
 			else { 														//If random number >= 5, pick from right array
-				arrRightStack = shuffle(arrRightStack);
+				
 				item = arrRightStack.pop();
 			}																			//Ends else if to choose positive word
-			/*if (item.indexOf(".") < 0) {
-				$("#console").html(item);									//Show word at that index	
-			} else {
-				$("#console").html("<img src=\"images/"+item+"\">");									//Show word at that index
-			}*/
-			
+					
 			if (arr1.indexOf(item) >= 0) {
 				$("#console").removeClass();
 				$("#console").addClass("color1");
@@ -168,7 +181,7 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 			$("#console").html(item);
 
 			matrixReturn[curBlock-1][0][i] = item;
-		} else if ((e.which == 69 || e.which == 73) && c != "?") {
+		} else if ((e.which == 69 || e.which == 73) && c != "?" && c != "DONE") {
 			date = new Date();
 			seconds = date.getTime()/1000;
 			diff = seconds - start; // time to select an answer
@@ -182,37 +195,56 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 					curTrial = 1;
 					curBlock++;
 					
-					//if (curBlock == 1 || curBlock == 2 || curBlock == 3 || curBlock == 6) {
-					//	numTrials = 20;
-					//} else if (curBlock == 4 || curBlock == 5 || curBlock == 7) {
-					//	numTrials = 40;
-					//}
+					/*if (curBlock == 1 || curBlock == 2 || curBlock == 3 || curBlock == 6) {
+						numTrials = 20;
+					} else if (curBlock == 4 || curBlock == 5 || curBlock == 7) {
+						numTrials = 40;
+					}*/
+
 					c = "?";
 					$("#console").html("");
 					i = 0;
 				} else {
-					c = Math.floor(Math.random() *10);
-					if(c < 5){ 													//If random number < 5, pick from left array
+					if (curBlock == 1 || curBlock == 2 || curBlock == 5) {
 						if (arrLeftStack.length == 0) {
 							arrLeftStack = arrLeft.slice();
 						}
 						arrLeftStack = shuffle(arrLeftStack);
-						item = arrLeftStack.pop();
-					} 																			//Ends if statement to check if random number < 5
-					else { 														//If random number >= 5, pick from right array
 						if (arrRightStack.length == 0) {
 							arrRightStack = arrRight.slice();
 						}
 						arrRightStack = shuffle(arrRightStack);
-						item = arrRightStack.pop();
-						
-					}																			//Ends else if to choose positive word
-					/*if (item.indexOf(".") < 0) {
-						$("#console").html(item);									//Show word at that index	
 					} else {
-						$("#console").html("<img src=\"images/"+item+"\">");									//Show word at that index
-					}*/
-					
+						if (arrLeftStackAux1.length == 0) {
+							arrLeftStackAux1 = shuffle(arrLeft1.slice());
+						}
+						if (arrLeftStackAux2.length == 0) {
+							arrLeftStackAux2 = shuffle(arrLeft2.slice());
+						}
+						if (arrRightStackAux1.length == 0) {
+							arrRightStackAux1 = shuffle(arrRight1.slice());
+						}
+						if (arrRightStackAux2.length == 0) {
+							arrRightStackAux2 = shuffle(arrRight2.slice());
+						}
+
+						if (curTrial%2 == 0) {
+							arrLeftStack = arrLeftStackAux1;
+							arrRightStack = arrRightStackAux1;
+						} else {
+							arrLeftStack = arrLeftStackAux2;
+							arrRightStack = arrRightStackAux2;
+						}
+					}
+
+					c = Math.floor(Math.random() *10);
+					if(c < 5){ 													//If random number < 5, pick from left array
+						item = arrLeftStack.pop();
+					} 																			//Ends if statement to check if random number < 5
+					else { 														//If random number >= 5, pick from right array
+						item = arrRightStack.pop();
+					}																			//Ends else if to choose positive word
+
 					if (arr1.indexOf(item) >= 0) {
 						$("#console").removeClass();
 						$("#console").addClass("color1");
@@ -239,10 +271,12 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 			} else {
 				$("#error").show();
 				matrixReturn[curBlock-1][2][i] = 1;
-				matrixReturn[curBlock-1][0][i+1] = item;
+				matrixReturn[curBlock-1][0][i+1] = matrixReturn[curBlock-1][0][i];
 				matrixReturn[curBlock-1][3][i+1] = matrixReturn[curBlock-1][3][i];
 				i++;
 			}
+
+
 		}			
 			
 		switch (curBlock) {
@@ -280,28 +314,20 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 		}
 		if (c != "DONE") {
 			$("#directions").html(numTrials + " words will be shown. Press 'e' if the word is " + nameLeft.toLowerCase()  + ", 'i' if the word is " + nameRight.toLowerCase() + ". Press 'spacebar' to begin.");
-			$("#left").html(nameLeft);
-			$("#right").html(nameRight);
+			$("#left").html(nameLeft.replace(" or ", "<br>or<br>"));
+			$("#right").html(nameRight.replace(" or ", "<br>or<br>"));
 		} else {
+			$("#console").removeClass();
 			$("#console").html("You have completed the IAT");
 			$("#directions").html("");
 			$("#left").html("");
 			$("#right").html("");
-			var jsonMatrix = JSON.stringify(matrixReturn);
-			alert(jsonMatrix);
-			//return JSON.stringify(matrixReturn, null, 4);
+			jsonMatrix = JSON.stringify(matrixReturn);
 			
-			var x = "hello"
-			//return x;
-			
-			$.ajax({type: "POST", url: "process.php",  data: {"matrix" : jsonMatrix}, dataType: 'json', success: function(result){
-    				alert("call back entered");
-						$("#results").html(result);
-        	
-        	//
-    }});
-			
-			
+			$.post( "process.php", {"matrix" : jsonMatrix}, function(result) {
+			  	$("#results").html(result);
+			});
+			return;
 		}
 	});
 	
