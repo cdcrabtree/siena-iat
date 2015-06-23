@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Implicit Association Test Example</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="style.css">
+<script>
+	$(document).ready(function(){
+		var negative = {0:"Pessimistic", 1:"Anarchy", 2:"Agony", 3:"Failure", 4:"Weak", 5:"Stupid", 6:"Evil", 7:"Jealous", 8:"Enemies", 9:"Suffering", 10:"Misery", 11:"Torture"};
+		var positive = {12:"Intellectual", 13:"Laughter", 14:"Approval", 15:"Confidence", 16:"Perfect", 17:"Allowed", 18:"Innocent", 19:"Sensual", 20:"Smiling", 21:"Love", 22:"Friendship", 23:"Optimism"};
+		var compsci = {24:"Programming", 25:"Gaming", 26:"Nerd", 27:"Geek", 28:"Computers", 29:"Binary", 30:"Technology", 31:"Website"};
+		var nursing = {32:"Caring", 33:"Thermometer", 34:"Hospital", 35:"Midwife", 36:"Emergency", 37:"Scrubs", 38:"Helpful"};
+		
+		
+		//Block 1 = positive and negative words
+		//Block 2 = computer science and nursing words
+		//Block 3 = computer science and positive words, nursing and negative words (20 trials)
+		//Block 4 = computer science and positive words, nursing and negative words (40 trials)
+		//Block 5 = negative and positive words
+		//Block 6 = negative and computer science, positive and nursing (20 trials)
+		//Block 7 = negative and computer science, positive and nursing (40 trials)
+		
+		var numBlocks = 7; 																		//The number of blocks there are
+		var numTrials = 20; 																	//Current/starting trials
+		var curBlock = 1; 																		//Current block on; always start with 1
+		var curTrial = 1; 																		//Current trial on; always start with 1
+
+		var c = "?"
+		var start = 0;																			//For timer
+		
+		$(document).keyup(function(e){	
+		if(curBlock <= numBlocks){																//If curBlock < numBlocks
+			$("#block").html(curBlock);
+			if(curTrial <= numTrials){															//If curTrials < numTrials
+				if(curBlock == 1){
+					$("#directions").html("20 Words will be shown. Press 'e' if the word is " +	//Changes directions for block 2
+					 	"positive, 'i' if the word is negative. Press 'spacebar' to begin.");
+					 $("#left").html("Positive (e)");
+					 $("#right").html("Negative (i)");
+					 if(e.which == 32 && c == "?"){												//If spacebar pressed
+					 	var date = new Date();
+        				var seconds = date.getTime()/1000;												//Timer initialization
+       	 				var diff = seconds - start;
+        				start = seconds			
+        				var whichArray = Math.floor(Math.random() * 10); 							//Pick a random number between 0 and 10
+						c = whichArray;
+				
+						if(whichArray < 5){ 														//If random number < 5, pick from negative array
+							var randNeg = Math.floor(Math.random() * 11);							//Choose random number from 0-11
+							$("#console").html(negative[randNeg]); 									//Show negative word at that index
+							$("#trial").html(curTrial);
+							curTrial++;
+						} 																			//Ends if statement to check if random number < 5
+						else if(whichArray >= 5){ 													//If random number >= 5, pick from positive array
+							var randPos = Math.floor(Math.random() * 11 + 12);						//Choose random number from 12-23
+							$("#console").html(positive[randPos]);									//Show positive word at that index
+							$("#trial").html(curTrial);
+							curTrial++;
+						}
+					 }
+					 else if(e.which == 69 || e.which == 73){
+					 	if((e.which == 69 && c >= 5) || (e.which == 73 && c < 5)){						//If e was pressed and word was positive or i was pressed and word was negative
+							var newWord = Math.floor(Math.random() *10);								//Choose random number from 0 - 10
+							c = newWord;
+					
+							var date = new Date();														//Timer initialization
+        					var seconds = date.getTime()/1000;
+       	 					var diff = seconds - start;
+        					start = seconds
+        					$("#timer").html(diff);														//Display time 
+        			
+							if(newWord < 5){ 															//If random number < 5, pick from negative array
+								randNeg = Math.floor(Math.random() * 11);								//Choose random number from 0-11
+								$("#console").html(negative[randNeg]); 									//Show negative word at that index
+								$("#trial").html(curTrial);
+						
+							} 																			//Ends if statement to check if random number < 5
+							else if(newWord >= 5){ 														//If random number >= 5, pick from positive array
+								randPos = Math.floor(Math.random() * 11 + 12);							//Choose random number from 12-23
+								$("#console").html(positive[randPos]);									//Show positive word at that index
+								$("#trial").html(curTrial);
+							}																			//Ends else if to choose positive word
+							curTrial++;
+						}					
+					 }
+				}
+				else if(curBlock == 2){
+					$("#directions").html("20 Words will be shown. Press 'e' if the word is " +	//Changes directions for block 2
+					 "computer science, 'i' if the word is nursing. Press 'spacebar' to begin.");
+					 $("#left").html("Computer Science (e)");
+					 $("#right").html("Nursing (i)");
+					 
+					 if(e.which == 32 && c == "?"){												//If spacebar pressed
+					 	var date = new Date();
+        				var seconds = date.getTime()/1000;												//Timer initialization
+       	 				var diff = seconds - start;
+        				start = seconds			
+        				var whichArray = Math.floor(Math.random() * 10); 							//Pick a random number between 0 and 10
+						c = whichArray;
+				
+						if(whichArray < 5){ 														//If random number < 5, pick from compsci array
+							var randNeg = Math.floor(Math.random() * 7 + 24);							//Choose random number from 0-11
+							$("#console").html(compsci[randNeg]); 									//Show compsci word at that index
+							$("#trial").html(curTrial);
+							curTrial++;
+						} 																			//Ends if statement to check if random number < 5
+						else if(whichArray >= 5){ 													//If random number >= 5, pick from positive array
+							var randPos = Math.floor(Math.random() * 6 + 32);						//Choose random number from 12-23
+							$("#console").html(nursing[randPos]);									//Show positive word at that index
+							$("#trial").html(curTrial);
+							curTrial++;
+						}
+					 }
+					 else if(e.which == 69 || e.which == 73){
+					 	if((e.which == 69 && c < 5) || (e.which == 73 && c >= 5)){						//If e was pressed and word was positive or i was pressed and word was negative
+							var newWord = Math.floor(Math.random() * 10);								//Choose random number from 0 - 10
+							c = newWord;
+					
+							var date = new Date();														//Timer initialization
+        					var seconds = date.getTime()/1000;
+       	 					var diff = seconds - start;
+        					start = seconds
+        					$("#timer").html(diff);														//Display time 
+        			
+							if(newWord < 5){ 															//If random number < 5, pick from negative array
+								randNeg = Math.floor(Math.random() * 7 + 24);								//Choose random number from 0-11
+								$("#console").html(compsci[randNeg]); 									//Show negative word at that index
+								$("#trial").html(curTrial);
+						
+							} 																			//Ends if statement to check if random number < 5
+							else if(newWord >= 5){ 														//If random number >= 5, pick from positive array
+								randPos = Math.floor(Math.random() * 6 + 32);							//Choose random number from 12-23
+								$("#console").html(nursing[randPos]);									//Show positive word at that index
+								$("#trial").html(curTrial);
+							}																			//Ends else if to choose positive word
+							curTrial++;
+						}					
+					 }
+				}
+				else if(curBlock == 3 || curBlock == 4){
+					if(curBlock == 3){
+						$("#directions").html("20 Words will be shown. Press 'e' if the word is " +	//Changes directions for block 3
+					 	"positive or computer science, 'i' if the word is negative or nursing. Press" +
+					  	" 'spacebar' to begin.");
+					  	$("#left").html("Positive or Computer Science (e)");
+					 	$("#right").html("Negative or Nursing (i)");
+					}
+					else if(curBlock == 4){
+						$("#directions").html("40 Words will be shown. Press 'e' if the word is "+	//Changes directions for block 4
+					 	"positive or computer science, 'i' if the word is negative or nursing. "+
+					 	"Press 'spacebar' to begin.");
+					 	$("#left").html("Positive or Computer Science (e)");
+					 	$("#right").html("Negative or Nursing (i)");
+					}
+					if(e.which == 32 && c == "?"){												//If spacebar pressed
+					 	var date = new Date();
+        				var seconds = date.getTime()/1000;												//Timer initialization
+       	 				var diff = seconds - start;
+        				start = seconds			
+        				var whichArray = Math.floor(Math.random() * 10); 							//Pick a random number between 0 and 10
+						c = whichArray;
+						$("#block").html(whichArray);
+						if(whichArray < 5){ 														//Pick from positive or compsci
+							var posComp = Math.floor(Math.random() * 10);
+							if(posComp < 5){													//Choose from positive
+								var randPos = Math.floor(Math.random() * 11 + 12);						//Choose random number from 12-23
+								$("#console").html(positive[randPos]);									//Show positive word at that index
+								$("#trial").html(curTrial);
+								curTrial++;
+							}
+							else if(posComp >= 5){												//Choose from compsci
+								var randComp = Math.floor(Math.random() * 7 + 24);						//Choose random number from 12-23
+								$("#console").html(compsci[randComp]);									//Show positive word at that index
+								$("#trial").html(curTrial);
+								curTrial++;
+							}		
+						} 																			//Pick from negative or nursing
+						else if(whichArray >= 5){ 													
+							var negNursing = Math.floor(Math.random() * 10);
+							if(negNursing < 5){														//Choose negative word
+								var randNeg = Math.floor(Math.random() * 11);						//Choose random number from 12-23
+								$("#console").html(negative[randNeg]);									//Show positive word at that index
+								$("#trial").html(curTrial);
+								curTrial++;
+							}	
+							else if(negNursing >= 5){												//Choose nursing word
+								var randNursing = Math.floor(Math.random() * 6 + 32);						//Choose random number from 12-23
+								$("#console").html(nursing[randNursing]);									//Show positive word at that index
+								$("#trial").html(curTrial);
+								curTrial++;
+							}
+						}
+					 }
+					 else if(e.which == 69 || e.which == 73){
+					 	if((e.which == 69 && c < 5) || (e.which == 73 && c >= 5)){													//If e pressed and pos or compsci word
+					 		var newWord = Math.floor(Math.random() * 10);								//Choose random number from 0 - 10
+							c = newWord;
+							var date = new Date();														//Timer initialization
+        					var seconds = date.getTime()/1000;
+       	 					var diff = seconds - start;
+        					start = seconds
+        					$("#timer").html(diff);	
+							if(newWord < 5){
+								var posComp = Math.floor(Math.random() * 10);
+								if(posComp < 5){													//Choose from positive
+									var randPos = Math.floor(Math.random() * 11 + 12);						//Choose random number from 12-23
+									$("#console").html(positive[randPos]);									//Show positive word at that index
+									$("#trial").html(curTrial);
+									
+								}
+								else if(posComp >= 5){												//Choose from compsci
+									var randComp = Math.floor(Math.random() * 7 + 24);						//Choose random number from 12-23
+									$("#console").html(compsci[randComp]);									//Show positive word at that index
+									$("#trial").html(curTrial);
+									
+								}	
+							}
+							else if(newWord >= 5){
+								var negNursing = Math.floor(Math.random() * 10);
+								if(negNursing < 5){														//Choose negative word
+									var randNeg = Math.floor(Math.random() * 11);						//Choose random number from 12-23
+									$("#console").html(negative[randNeg]);									//Show positive word at that index
+									$("#trial").html(curTrial);
+									
+								}	
+								else if(negNursing >= 5){												//Choose nursing word
+									var randNursing = Math.floor(Math.random() * 6 + 32);						//Choose random number from 12-23
+									$("#console").html(nursing[randNursing]);									//Show positive word at that index
+									$("#trial").html(curTrial);
+									
+								}
+							}
+							curTrial++;
+					 	}
+					 }
+				}
+				else if(curBlock == 5){
+					$("#directions").html("20 Words will be shown. Press 'e' if the word is "+	//Changes directions for block 5
+					"negative, 'i' if the word is positive. Press 'spacebar' to begin.");
+					$("#left").html("Negative (e)");
+					 $("#right").html("Positive (i)");
+					if(e.which == 32 && c == "?"){												//If spacebar pressed
+					 	var date = new Date();
+        				var seconds = date.getTime()/1000;												//Timer initialization
+       	 				var diff = seconds - start;
+        				start = seconds			
+        				var whichArray = Math.floor(Math.random() * 10); 							//Pick a random number between 0 and 10
+						c = whichArray;
+				
+						if(whichArray < 5){ 														//If random number < 5, pick from negative array
+							var randNeg = Math.floor(Math.random() * 11);							//Choose random number from 0-11
+							$("#console").html(negative[randNeg]); 									//Show negative word at that index
+							$("#trial").html(curTrial);
+							curTrial++;
+						} 																			//Ends if statement to check if random number < 5
+						else if(whichArray >= 5){ 													//If random number >= 5, pick from positive array
+							var randPos = Math.floor(Math.random() * 11 + 12);						//Choose random number from 12-23
+							$("#console").html(positive[randPos]);									//Show positive word at that index
+							$("#trial").html(curTrial);
+							curTrial++;
+						}
+					 }
+					 else if(e.which == 69 || e.which == 73){
+					 	if((e.which == 69 && c < 5) || (e.which == 73 && c >= 5)){						//If e was pressed and word was positive or i was pressed and word was negative
+							var newWord = Math.floor(Math.random() *10);								//Choose random number from 0 - 10
+							c = newWord;
+					
+							var date = new Date();														//Timer initialization
+        					var seconds = date.getTime()/1000;
+       	 					var diff = seconds - start;
+        					start = seconds
+        					$("#timer").html(diff);														//Display time 
+        			
+							if(newWord < 5){ 															//If random number < 5, pick from negative array
+								randNeg = Math.floor(Math.random() * 11);								//Choose random number from 0-11
+								$("#console").html(negative[randNeg]); 									//Show negative word at that index
+								$("#trial").html(curTrial);
+						
+							} 																			//Ends if statement to check if random number < 5
+							else if(newWord >= 5){ 														//If random number >= 5, pick from positive array
+								randPos = Math.floor(Math.random() * 11 + 12);							//Choose random number from 12-23
+								$("#console").html(positive[randPos]);									//Show positive word at that index
+								$("#trial").html(curTrial);
+							}																			//Ends else if to choose positive word
+							curTrial++;
+						}					
+					 }
+				}
+				else if(curBlock == 6 || curBlock == 7){
+					if(curBlock == 6){
+						$("#directions").html("20 Words will be shown. Press 'e' if the word is "+	//Changes directions for block 6
+						"negative or computer science, 'i' if the word is positive or nursing. Press "+	
+						"'spacebar' to begin.");
+						$("#left").html("Negative or Computer Science (e)");
+					 	$("#right").html("Positive or Nursing (i)");
+					}
+					else if(curBlock == 7){
+						$("#directions").html("40 Words will be shown. Press 'e' if the word is"+	//Changes directions for block 7
+						" negative or computer science, 'i' if the word is positive or nursing. "+
+						"Press 'spacebar' to begin.");
+						$("#left").html("Negative or Computer Science (e)");
+					 	$("#right").html("Positive or Nursing (i)");
+						numTrials = 40;
+					}
+					if(e.which == 32 && c == "?"){												//If spacebar pressed
+					 	var date = new Date();
+        				var seconds = date.getTime()/1000;												//Timer initialization
+       	 				var diff = seconds - start;
+        				start = seconds	
+        						
+        				var whichArray = Math.floor(Math.random() * 10); 							//Pick a random number between 0 and 10
+						c = whichArray;
+						
+						$("#block").html(whichArray);
+						if(whichArray < 5){ 														//Pick from positive or compsci
+							var negComp = Math.floor(Math.random() * 10);
+							if(negComp < 5){													//Choose from positive
+								var randNeg = Math.floor(Math.random() * 11);						//Choose random number from 12-23
+								$("#console").html(negative[randNeg]);									//Show positive word at that index
+								$("#trial").html(curTrial);
+								curTrial++;
+							}
+							else if(negComp >= 5){												//Choose from compsci
+								var randComp = Math.floor(Math.random() * 7 + 24);						//Choose random number from 12-23
+								$("#console").html(compsci[randComp]);									//Show positive word at that index
+								$("#trial").html(curTrial);
+								curTrial++;
+							}		
+						} 																			//Pick from negative or nursing
+						else if(whichArray >= 5){ 													
+							var posNursing = Math.floor(Math.random() * 10);
+							if(posNursing < 5){														//Choose negative word
+								var randPos = Math.floor(Math.random() * 11 + 12);						//Choose random number from 12-23
+								$("#console").html(positive[randPos]);									//Show positive word at that index
+								$("#trial").html(curTrial);
+								curTrial++;
+							}	
+							else if(posNursing >= 5){												//Choose nursing word
+								var randNursing = Math.floor(Math.random() * 6 + 32);						//Choose random number from 12-23
+								$("#console").html(nursing[randNursing]);									//Show positive word at that index
+								$("#trial").html(curTrial);
+								curTrial++;
+							}
+						}
+					 }
+					 else if(e.which == 69 || e.which == 73){
+					 	if((e.which == 69 && c < 5) || (e.which == 73 && c >= 5)){													//If e pressed and pos or compsci word
+					 		var newWord = Math.floor(Math.random() * 10);								//Choose random number from 0 - 10
+							c = newWord;
+							
+							var date = new Date();														//Timer initialization
+        					var seconds = date.getTime()/1000;
+       	 					var diff = seconds - start;
+        					start = seconds
+        					$("#timer").html(diff);
+        						
+							if(newWord < 5){
+								var negComp = Math.floor(Math.random() * 10);
+								if(negComp < 5){													//Choose from positive
+									var randNeg = Math.floor(Math.random() * 11);						//Choose random number from 12-23
+									$("#console").html(negative[randNeg]);									//Show positive word at that index
+									$("#trial").html(curTrial);
+									
+								}
+								else if(negComp >= 5){												//Choose from compsci
+									var randComp = Math.floor(Math.random() * 7 + 24);						//Choose random number from 12-23
+									$("#console").html(compsci[randComp]);									//Show positive word at that index
+									$("#trial").html(curTrial);
+									
+								}		
+							}		
+							else if(newWord >= 5){
+								var posNursing = Math.floor(Math.random() * 10);
+									if(posNursing < 5){														//Choose negative word
+										var randPos = Math.floor(Math.random() * 11 + 12);						//Choose random number from 12-23
+										$("#console").html(positive[randPos]);									//Show positive word at that index
+										$("#trial").html(curTrial);
+									}	
+									else if(posNursing >= 5){												//Choose nursing word
+										var randNursing = Math.floor(Math.random() * 6 + 32);						//Choose random number from 12-23
+										$("#console").html(nursing[randNursing]);									//Show positive word at that index
+										$("#trial").html(curTrial);
+									}
+							}
+							curTrial++;
+					 	}
+					 }
+				}
+				
+			}
+																									//Ends check to see if curBlock < numBlocks
+	   		else{																				//If curTrial > numTrials
+	   			curTrial = 1;
+	   			curBlock++;
+	   			c = "?";
+	   			$("#directions").html("Rest stage");
+	   			$("#left").html("");
+	   			$("#right").html("");
+	   			$("#console").html("");
+	   			if(curBlock == 4 || curBlock == 7){
+					numTrials = 40;
+				}
+				else if(curBlock == 6){
+					numTrials = 20;
+				}
+			}
+		}
+		else{																					//If curBlock > numBlocks
+	   			c = "DONE";
+	   			$("#console").html("You have completed the IAT");
+	   		}
+			
+	   	
+	   	
+		});																						//Ends keyup function
+	
+	
+	});																							//Ends document ready function
+
+</script>
+
+</head>
+<body>
+	<p id="directions">20 Words will be shown. Press 'e' if the word is " +	
+					 	"positive, 'i' if the word is negative. Press 'spacebar' to begin.</p>
+	
+	<table id="associate">
+	<tr>
+		<td id="left"></td>
+		<td id="right"></td>
+	</tr>
+	</table>
+	
+	<p id="console"></p>
+	<p id="timer"></p>
+	<p id="trial"></p>
+	<p id="block"></p>
+
+
+</body>
+</html>
