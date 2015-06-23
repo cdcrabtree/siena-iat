@@ -67,7 +67,7 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 	matrixReturn = [[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]]];
 
 	i = 0;
-	numTrials = 5; 																		//Current/starting trials
+	numTrials = 20; 																		//Current/starting trials
 	curBlock = 1; 																		//Current block on; always start with 1
 	curTrial = 1; 																		//Current trial on; always start with 1
 	c = "?"
@@ -195,49 +195,65 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 					curTrial = 1;
 					curBlock++;
 					
-					/*if (curBlock == 1 || curBlock == 2 || curBlock == 3 || curBlock == 6) {
+					if (curBlock == 1 || curBlock == 2 || curBlock == 3 || curBlock == 6) {
 						numTrials = 20;
 					} else if (curBlock == 4 || curBlock == 5 || curBlock == 7) {
 						numTrials = 40;
-					}*/
+					}
 
 					c = "?";
 					$("#console").html("");
 					i = 0;
 				} else {
+					c = Math.floor(Math.random() *10);
 					if (curBlock == 1 || curBlock == 2 || curBlock == 5) {
-						if (arrLeftStack.length == 0) {
+						if (arrLeftStack.length == 0 && arrRightStack.length == 0) {
 							arrLeftStack = arrLeft.slice();
-						}
-						arrLeftStack = shuffle(arrLeftStack);
-						if (arrRightStack.length == 0) {
 							arrRightStack = arrRight.slice();
-						}
-						arrRightStack = shuffle(arrRightStack);
-					} else {
-						if (arrLeftStackAux1.length == 0) {
-							arrLeftStackAux1 = shuffle(arrLeft1.slice());
-						}
-						if (arrLeftStackAux2.length == 0) {
-							arrLeftStackAux2 = shuffle(arrLeft2.slice());
-						}
-						if (arrRightStackAux1.length == 0) {
-							arrRightStackAux1 = shuffle(arrRight1.slice());
-						}
-						if (arrRightStackAux2.length == 0) {
-							arrRightStackAux2 = shuffle(arrRight2.slice());
+						} else {
+							if (arrLeftStack.length == 0) {
+								c = 7;
+							} 
+							if (arrRightStack.length == 0) {
+								c = 3;
+							}
 						}
 
+						arrLeftStack = shuffle(arrLeftStack);
+						arrRightStack = shuffle(arrRightStack);
+					} else {
 						if (curTrial%2 == 0) {
+							if (arrLeftStackAux1.length == 0 && arrRightStackAux1.length == 0) {
+								arrLeftStackAux1 = shuffle(arrLeft1.slice());
+								arrRightStackAux1 = shuffle(arrRight1.slice());
+							} else {
+								if (arrLeftStackAux1.length == 0) {
+									c = 7;
+								} 
+								if (arrRightStackAux1.length == 0) {
+									c = 3;
+								}
+							}
 							arrLeftStack = arrLeftStackAux1;
 							arrRightStack = arrRightStackAux1;
 						} else {
+							if (arrLeftStackAux2.length == 0 && arrRightStackAux2.length == 0) {
+								arrLeftStackAux2 = shuffle(arrLeft2.slice());
+								arrRightStackAux2 = shuffle(arrRight2.slice());
+							} else {
+								if (arrLeftStackAux2.length == 0) {
+									c = 7;
+								} 
+								if (arrRightStackAux2.length == 0) {
+									c = 3;
+								}
+							}
 							arrLeftStack = arrLeftStackAux2;
 							arrRightStack = arrRightStackAux2;
 						}
 					}
 
-					c = Math.floor(Math.random() *10);
+					
 					if(c < 5){ 													//If random number < 5, pick from left array
 						item = arrLeftStack.pop();
 					} 																			//Ends if statement to check if random number < 5
