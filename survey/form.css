@@ -50,4 +50,7 @@ label {
     padding: 0 1em;
     text-align: center;
 }
+button, input, optgroup, select, textarea{
+	color: black;
+}
 
