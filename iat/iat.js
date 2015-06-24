@@ -67,12 +67,13 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 	matrixReturn = [[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]],[[],[],[],[]]];
 
 	i = 0;
-	numTrials = 20; 																		//Current/starting trials
+	numTrials = 3; 																		//Current/starting trials
 	curBlock = 1; 																		//Current block on; always start with 1
 	curTrial = 1; 																		//Current trial on; always start with 1
 	c = "?"
 	start = 0;
 	diff = 0;
+	post = 0;
 
 	nameLeft = "<span class='color1'>" + name1 + "</span>";
 	nameRight = "<span class='color1'>" + name2 + "</span>";
@@ -195,11 +196,11 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 					curTrial = 1;
 					curBlock++;
 					
-					if (curBlock == 1 || curBlock == 2 || curBlock == 3 || curBlock == 6) {
+					/*if (curBlock == 1 || curBlock == 2 || curBlock == 3 || curBlock == 6) {
 						numTrials = 20;
 					} else if (curBlock == 4 || curBlock == 5 || curBlock == 7) {
 						numTrials = 40;
-					}
+					}*/
 
 					c = "?";
 					$("#console").html("");
@@ -340,10 +341,14 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 			$("#right").html("");
 			jsonMatrix = JSON.stringify(matrixReturn);
 			
-			$.post( "process.php", {"matrix" : jsonMatrix}, function(result) {
-			  	$("#results").html(result);
-			});
-			return;
+			if (post == 0) {
+				$.post( "process.php", {"matrix" : jsonMatrix}, function(result) {
+				  	$("#results").html(result);
+				});
+				post = 1;
+			}
+			
+			
 		}
 	});
 	
