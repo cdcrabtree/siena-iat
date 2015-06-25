@@ -22,7 +22,7 @@
 	$field = $_POST['field'];
 	$background = $_POST['background'];
 
-	include ("db.php");
+	include ("../db.php");
 
 	$idPerson = $_SESSION['idPerson'];
 	//if the user did not insert a valid ID, it generates a random ID

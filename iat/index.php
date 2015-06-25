@@ -29,14 +29,14 @@
 				if (personID.length === 0) {
 					window.location.href = 'survey.php';
 				} else {
-					var url = "processIdUser.php"; // the script where you handle the form input.
+					var url = "ajax/index.php"; // the script where you handle the form input.
 				    $.ajax({
 				           type: "POST",
 				           url: url,
 				           data: {idPerson: personID}, // serializes the form's elements.
 				           success: function(data) {
 							    if (data == 'success') {
-									window.location.href = 'survey.php';
+									window.location.href = 'instructions.php';
 							    }else if(data == 'error'){
 							        $("#error").html("ID not found, please try again.");
 							    }

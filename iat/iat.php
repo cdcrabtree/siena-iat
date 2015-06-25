@@ -1,6 +1,6 @@
 <?php 
 session_start(); 
-if (empty($_SESSION['idSurvey']) || empty($_SESSION['idPerson']	)) {
+if (empty($_SESSION['idIat']) || empty($_SESSION['idPerson']	)) {
 	header( 'Location: /');
 }
 ?>

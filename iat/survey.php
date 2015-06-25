@@ -437,7 +437,7 @@
 		// this is the id of the form
 		$("#survey").submit(function() {
 
-		    var url = "processSurvey.php"; // the script where you handle the form input.
+		    var url = "ajax/survey.php"; // the script where you handle the form input.
 
 		    $.ajax({
 		           type: "POST",

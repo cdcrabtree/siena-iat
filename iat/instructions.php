@@ -1,6 +1,6 @@
 <?php 
 session_start(); 
-if (empty($_SESSION['idSurvey']) || empty($_SESSION['idPerson']	)) {
+if (empty($_SESSION['idPerson']	)) {
 	header( 'Location: /');
 }
 ?>
@@ -11,6 +11,7 @@ if (empty($_SESSION['idSurvey']) || empty($_SESSION['idPerson']	)) {
 	    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Instructions to IAT </title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="form.css">
 		
@@ -57,9 +58,25 @@ if (empty($_SESSION['idSurvey']) || empty($_SESSION['idPerson']	)) {
 				<li>For best results, avoid distractions and stay focused.</li>
 			</ul>
 			
-			<button type="submit" class="btn btn-block" onclick="window.location.href='iat.php'" id="cont"> I am ready to begin</button>
+			<button type="submit" class="btn btn-block" id="cont"> I am ready to begin</button>
 		</div>
 		</div>
+		<script>
+			$("#cont").click(function() {
+				var url = "ajax/instructions.php"; 
+			    $.ajax({
+		           type: "POST",
+		           url: url,
+		           success: function(data) {
+					    if (data == 'success') {
+							window.location.href = 'iat.php';
+					    }else if(data == 'error'){
+					        //$("#error").html("ID not found, please try again.");
+					    }
+					},
+		        });				
+			});
+		</script>
 	</body>
 </html>
 
