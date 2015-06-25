@@ -396,31 +396,31 @@
 						<input type="radio" class="radio-inline" id="1" name="background" value="1">
 					</label>
 					<label for="2">2<br>
-						<input type="radio" class="radio-inline" id="2" name="background" value="1">
+						<input type="radio" class="radio-inline" id="2" name="background" value="2">
 					</label>
 					<label for="3">3<br>
-						<input type="radio" class="radio-inline" id="3" name="background" value="1">
+						<input type="radio" class="radio-inline" id="3" name="background" value="3">
 					</label>
 					<label for="4">4<br>
-						<input type="radio" class="radio-inline" id="4" name="background" value="1">
+						<input type="radio" class="radio-inline" id="4" name="background" value="4">
 					</label>
 					<label for="5">5<br>
-						<input type="radio" class="radio-inline" id="5" name="background" value="1">
+						<input type="radio" class="radio-inline" id="5" name="background" value="5">
 					</label>
 					<label for="6">6<br>
-						<input type="radio" class="radio-inline" id="6" name="background" value="1">
+						<input type="radio" class="radio-inline" id="6" name="background" value="6">
 					</label>
 					<label for="7">7<br>
-						<input type="radio" class="radio-inline" id="7" name="background" value="1">
+						<input type="radio" class="radio-inline" id="7" name="background" value="7">
 					</label>
 					<label for="8">8<br>
-						<input type="radio" class="radio-inline" id="8" name="background" value="1">
+						<input type="radio" class="radio-inline" id="8" name="background" value="8">
 					</label>
 					<label for="9">9<br>
-						<input type="radio" class="radio-inline" id="9" name="background" value="1">
+						<input type="radio" class="radio-inline" id="9" name="background" value="9">
 					</label>
 					<label for="10">10<br>
-						<input type="radio" class="radio-inline" id="10" name="background" value="1">
+						<input type="radio" class="radio-inline" id="10" name="background" value="10">
 					</label>
 				</div>
 				
