@@ -31,6 +31,7 @@ $values_mysql = "";
 $array_csv = array();
 $array_csv[] = array("Survey ID", "Seq Number", "Response Time", "Item", "Category", "Error","Block");
 $seq_number = 1;
+$trial_number = 1;
 foreach ($data as $key => $block) {
 	for ($i=0; $i < count($block[0]); $i++) {
 		$item = $block[0][$i];
@@ -43,17 +44,19 @@ foreach ($data as $key => $block) {
 
 		//create the string to do the insert into the database
 		if ($seq_number == 1) {
-			$values_mysql .= "(" . $idSurvey . "," . $seq_number . "," . $responseTime . ",'" . $item . "','"  . $category . "'," . $error . "," . ($key + 1) . ")" ;
+			$values_mysql .= "(" . $idSurvey . "," . $seq_number . "," . $trial_number . "," . $responseTime . ",'" . $item . "','"  . $category . "'," . $error . "," . ($key + 1) . ")" ;
 		} else {
-			$values_mysql .= ",(" . $idSurvey . "," . $seq_number . "," . $responseTime . ",'" . $item . "','"  . $category . "'," . $error . "," . ($key + 1) . ")" ;
+			$values_mysql .= ",(" . $idSurvey . "," . $seq_number . "," . $trial_number . "," . $responseTime . ",'" . $item . "','"  . $category . "'," . $error . "," . ($key + 1) . ")" ;
 		}
-		
+		if ($error == 0) {
+			$trial_number++;
+		}
 		$seq_number++;
 	}
 }
 
 //insert the data of the iat into the database
-if (!$mysqli->query("INSERT INTO trials (idsurvey, trial_seq, response_time, item, category, error, block) VALUES ".$values_mysql."")) {
+if (!$mysqli->query("INSERT INTO trials (idsurvey, trial_seq, trial_number, response_time, item, category, error, block) VALUES ".$values_mysql."")) {
     echo "Multi-INSERT failed: (" . $mysqli->errno . ") " . $mysqli->error;
 } else {
 	echo "Success! The data was saved in the database and in the csv file. Do not forget to save your ID ".$idPerson.".";
