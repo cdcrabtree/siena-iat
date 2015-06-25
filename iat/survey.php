@@ -392,8 +392,6 @@
 				</div>
 				<div class="form-group">
 					Background level of Computer Science (1-Very Low... 5-Basic Knowledge... 10-Very High)
-					<br>
-					<br>
 					<label for="1">1<br>
 						<input type="radio" class="radio-inline" id="1" name="background" value="1">
 					</label>
@@ -427,6 +425,8 @@
 				</div>
 				
 			</fieldset>
+			<br>
+			<br>
 			<button type="submit" class="btn btn-block" id="button_submit">Submit</button>
 		</form>
 		
