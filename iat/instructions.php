@@ -8,8 +8,8 @@ if (empty($_SESSION['idSurvey']) || empty($_SESSION['idPerson']	)) {
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    	<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Instructions to IAT </title>
 		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="form.css">
@@ -56,7 +56,37 @@ if (empty($_SESSION['idSurvey']) || empty($_SESSION['idPerson']	)) {
 				<li>Expect to make a few mistakes because of going fast. That's OK.</li>
 				<li>For best results, avoid distractions and stay focused.</li>
 			</ul>
-			<button type="submit" class="btn btn-block" onclick="window.location.href='iat.php'" id="cont"> I am ready to begin</button>
+			
+			<p>
+			Insert the ID you were given here: <input type="text" name="idPerson" id="idPerson" maxlength="25"> <span id="error" style="color:red"></span>
+			</p>
+			
+			<script>
+				$("#cont").click(function() {
+					personID = $("#idPerson").val();
+					if (personID.length === 0) {
+						window.location.href = 'survey.php';
+					} else {
+						var url = "processIdUser.php"; // the script where you handle the form input.
+					    $.ajax({
+					           type: "POST",
+					           url: url,
+					           data: {idPerson: personID}, // serializes the form's elements.
+					           success: function(data) {
+								    if (data == 'success') {
+										window.location.href = 'iat.php';
+								    }else if(data == 'error'){
+								        $("#error").html("ID not found, please try again.");
+								    }
+								},
+					         });
+					    return false; // avoid to execute the actual submit of the form.
+					}
+					
+				});
+			</script>
+			
+			<!--button type="submit" class="btn btn-block" onclick="window.location.href='iat.php'" id="cont"> I am ready to begin</button-->
 		</div>
 		</div>
 	</body>
