@@ -29,7 +29,7 @@ $idPerson = $_SESSION['idPerson'];
 //prepare the data of the iat before save it
 $values_mysql = "";
 $array_csv = array();
-$array_csv[] = array("IAT ID", "Person ID", "Seq Number", "Trial Number", "Response Time", "Item", "Category", "Error","Block");
+$array_csv[] = array("Seq Number", "Trial Number", "Response Time", "Item", "Category", "Error","Block");
 $seq_number = 1;
 $trial_number = 1;
 foreach ($data as $key => $block) {
@@ -40,13 +40,13 @@ foreach ($data as $key => $block) {
 		$category = $block[3][$i];
 
 		//create the array to save the data into the csv file
-		$array_csv[] = array($idIat, $idPerson, $seq_number, $trial_number, $responseTime, $item, $category, $error, ($key+1));
+		$array_csv[] = array($seq_number, $trial_number, $responseTime, $item, $category, $error, ($key+1));
 
 		//create the string to do the insert into the database
 		if ($seq_number == 1) {
-			$values_mysql .= "(" . $idIat . "," . $idPerson . "," . $seq_number . "," . $trial_number . "," . $responseTime . ",'" . $item . "','"  . $category . "'," . $error . "," . ($key + 1) . ")" ;
+			$values_mysql .= "(" . $idIat  . "," . $seq_number . "," . $trial_number . "," . $responseTime . ",'" . $item . "','"  . $category . "'," . $error . "," . ($key + 1) . ")" ;
 		} else {
-			$values_mysql .= ",(" . $idIat . "," . $idPerson . "," . $seq_number . "," . $trial_number . "," . $responseTime . ",'" . $item . "','"  . $category . "'," . $error . "," . ($key + 1) . ")" ;
+			$values_mysql .= ",(" . $idIat . "," . $seq_number . "," . $trial_number . "," . $responseTime . ",'" . $item . "','"  . $category . "'," . $error . "," . ($key + 1) . ")" ;
 		}
 		if ($error == 0) {
 			$trial_number++;
@@ -56,7 +56,7 @@ foreach ($data as $key => $block) {
 }
 
 //insert the data of the iat into the database
-if (!$mysqli->query("INSERT INTO trials (idiat, idperson, trial_seq, trial_number, response_time, item, category, error, block) VALUES ".$values_mysql."")) {
+if (!$mysqli->query("INSERT INTO trials (idiat, trial_seq, trial_number, response_time, item, category, error, block) VALUES ".$values_mysql."")) {
     echo "Multi-INSERT failed: (" . $mysqli->errno . ") " . $mysqli->error;
 } else {
 	echo "Success! The data was saved in the database and in the csv file. Do not forget to save your ID ".$idPerson.".";

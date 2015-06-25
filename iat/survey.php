@@ -391,7 +391,7 @@
 					</select>
 				</div>
 				<div class="form-group">
-					Background level of Computer Science (1-Very Low... 5-Basic Knowledge... 10-Very High)
+					Background level of Computer Science (1-Very Low... 5-Basic Knowledge... 10-Very High)<br>
 					<label for="1">1<br>
 						<input type="radio" class="radio-inline" id="1" name="background" value="1">
 					</label>
@@ -445,21 +445,6 @@
 		           data: $("#survey").serialize(), // serializes the form's elements.
 		           success: function(data) {
 					    if (data.status == 'success') {
-					    	/*$("body").html('<p id="directions"></p><div id="associate"><div id="left"></div><div id="right"></div></div><div id="results"></div><div style="clear:both"></div><p id="console"></p><p id="error"><img src="images/error.png" style="display:none;" width="200" height="200" alt="Error"></p><div id="return"></div>');
-
-					    	$("#css1").remove();
-					    	$("#css2").remove();
-					    	$('head').append('<link rel="stylesheet" type="text/css" href="style.css">');
-
-					    	var male = ["James", "John", "Robert", "Michael", "William", "David", "Richard", "Joseph"];
-							var female = ["Mary", "Patricia", "Jennifer", "Elizabeth", "Linda", "Barbara", "Susan", "Margaret"];
-							var compsci = ["Apps", "Computer", "Gaming", "Hacking", "Internet", "Programming", "Software", "Technology"];
-							var bio = ["Nature", "Life", "Cell", "Habitat", "Organs", "Microscope", "Species", "Protein"];
-							
-
-							iat("Computer Science", "Biology", "Female", "Male", compsci, bio, female, male);*/
-
-					        //alert("Thank you for subscribing!");
 					        alert("Do not forget to copy your ID: " + data.msg);
 
 					        window.location.href = "instructions.php";
