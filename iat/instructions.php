@@ -57,36 +57,7 @@ if (empty($_SESSION['idSurvey']) || empty($_SESSION['idPerson']	)) {
 				<li>For best results, avoid distractions and stay focused.</li>
 			</ul>
 			
-			<p>
-			Insert the ID you were given here: <input type="text" name="idPerson" id="idPerson" maxlength="25"> <span id="error" style="color:red"></span>
-			</p>
-			
-			<script>
-				$("#cont").click(function() {
-					personID = $("#idPerson").val();
-					if (personID.length === 0) {
-						window.location.href = 'survey.php';
-					} else {
-						var url = "processIdUser.php"; // the script where you handle the form input.
-					    $.ajax({
-					           type: "POST",
-					           url: url,
-					           data: {idPerson: personID}, // serializes the form's elements.
-					           success: function(data) {
-								    if (data == 'success') {
-										window.location.href = 'iat.php';
-								    }else if(data == 'error'){
-								        $("#error").html("ID not found, please try again.");
-								    }
-								},
-					         });
-					    return false; // avoid to execute the actual submit of the form.
-					}
-					
-				});
-			</script>
-			
-			<!--button type="submit" class="btn btn-block" onclick="window.location.href='iat.php'" id="cont"> I am ready to begin</button-->
+			<button type="submit" class="btn btn-block" onclick="window.location.href='iat.php'" id="cont"> I am ready to begin</button>
 		</div>
 		</div>
 	</body>
