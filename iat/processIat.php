@@ -1,8 +1,9 @@
-<?php
+<?php 
+session_start();
 include ("db.php");
 
 $data = json_decode($_POST['matrix']);
-
+/*
 //if the user did not insert a valid ID, it generates a random ID
 if (empty($idPerson)) {
 	$idPerson = rand(100000,999999);
@@ -21,6 +22,9 @@ if($insert_row){
     echo "Error to save the survey. Please, try again.";
     exit;
 }
+*/
+$idSurvey = $_SESSION['idSurvey'];
+$idPerson = $_SESSION['idPerson'];
 
 //prepare the data of the iat before save it
 $values_mysql = "";
@@ -52,7 +56,7 @@ foreach ($data as $key => $block) {
 if (!$mysqli->query("INSERT INTO trials (idsurvey, trial_seq, response_time, item, category, error, block) VALUES ".$values_mysql."")) {
     echo "Multi-INSERT failed: (" . $mysqli->errno . ") " . $mysqli->error;
 } else {
-	echo "Success! The data was saved in the database and in the csv file with the name ".$idSurvey.".";
+	echo "Success! The data was saved in the database and in the csv file. Do not forget to save your ID ".$idPerson.".";
 }
 $mysqli->close();
 
@@ -62,5 +66,8 @@ foreach ($array_csv as $fields) {
     fputcsv($fp, $fields);
 }
 fclose($fp);
+
+session_destroy();
+
 exit;
 ?>

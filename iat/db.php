@@ -1,5 +1,4 @@
-<?
-
+<?php 
 $mysqli = new mysqli("localhost", "sienasel_iat", "SienaIAT!", "sienasel_iat");
 
 if ($mysqli->connect_errno) {

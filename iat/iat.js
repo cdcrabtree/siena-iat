@@ -342,7 +342,7 @@ function iat (title1, title2, title3, title4, array1, array2, array3, array4) {
 			jsonMatrix = JSON.stringify(matrixReturn);
 			
 			if (post == 0) {
-				$.post( "process.php", {"matrix" : jsonMatrix}, function(result) {
+				$.post( "processIat.php", {"matrix" : jsonMatrix}, function(result) {
 				  	$("#results").html(result);
 				});
 				post = 1;

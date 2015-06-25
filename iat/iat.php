@@ -1,3 +1,9 @@
+<?php 
+session_start(); 
+if (empty($_SESSION['idSurvey']) || empty($_SESSION['idPerson']	)) {
+	header( 'Location: /');
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
