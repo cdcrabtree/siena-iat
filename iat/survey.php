@@ -79,7 +79,6 @@
 						<option value="other states"> Native Hawaiian or Other Pacific Islander</option>
 						<option value="white"> White</option>
 						<option value="hispanic or latino"> Hispanic or Latino</option>
-						<option value="not hispanic or latino"> Not Hispanic or Latino </option>
 						<option value="no answer">No Answer</option>
 					</select>
 				</div>
@@ -95,7 +94,7 @@
 					</select>
 				</div>
 				<div class="form-group">
-					What country have you spent most of your life?
+					What country have you spent most of your life in?
 					<select name="countries" class="form-control">
 						<option selected disabled></option>
 						<option value="USA">United States</option>
@@ -388,6 +387,7 @@
 						<option value="9">Psychology</option>
 						<option value="10">Social Science or history</option>
 						<option value="11">Visual Performing Arts</option>
+						<option value="12">Other</option>
 					</select>
 				</div>
 				<div class="form-group">
